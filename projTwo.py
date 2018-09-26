@@ -70,7 +70,8 @@ def lalDoesIDS( arr ):
         print(arr,' IDS loop')
         node, vals, mapp = lalDoesDFS( arr, d )
         if isSolution( node ):
-            print( 'Solution: ', arr )
+            print( 'Solution: ', node )
+            return
         d += 1
 
 
@@ -105,7 +106,7 @@ def lalDoesDFS( arr , d):
             pointers[child[0][3]] = child[0][2]
             if isSolution( child ):
                 print('sol ', child)
-                return (current, values, pointers) 
+                return (child, values, pointers) 
         if d == 0:
             return (current, values, pointers)
         index += ( chilCount )
@@ -119,7 +120,7 @@ def NewPermute(a):
     for N in range(0,len(a[1]) - 1):
         #print('BBB')
         #add child iff a's left and right boundry are not current left right boundry
-        for I in range(0,len(a[1]) - (N)):
+        for I in range(1,len(a[1]) - (N)):
             if(a[0][0] != N  or a[0][1] != N+I):
                 tmp = [[N , N + I , 0 , 0]]
                 tmp.append( revItoJ(a[1], N, N+I) )
