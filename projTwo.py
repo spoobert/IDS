@@ -103,6 +103,7 @@ def main():
     arr.append( [3,1,4,7,6, 3, 9] )
     node, vals, dic = lalDoesBFS(arr)    
     idx = dic[node[0][2]]
+    print('solution: ',node)
     while( idx >= 0 ):        
 
         node = vals[idx]
