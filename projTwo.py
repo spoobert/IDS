@@ -15,7 +15,7 @@ def revItoJ( arr , i , j ):
     return tmp
 
 def isSolution( arr ):
-    for i in range( 1, len(arr[1]) - 1 ):
+    for i in range( 0, len(arr[1]) - 1 ):
         if arr[1][i] > arr[1][i + 1]:
             return False
     return  True
@@ -60,7 +60,7 @@ def lalDoesBFS( arr ):
             pointers[child[0][3]] = child[0][2]
             chilCount += 1
         index += (1 + chilCount)
-        index += 1
+        #index += 1
 
 def NewPermute(a):
     b = []
