@@ -37,6 +37,8 @@ def lalDoesBFS( arr ):
     pointers[ arr[0][3] ] = index
 
     #pointers[ arr[0][3] ] = arr[0][2]
+    if isSolution( arr ):
+        return (arr, values, pointers)
 
     while( True ):
         current = q.get()
@@ -58,6 +60,8 @@ def lalDoesBFS( arr ):
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
             #chilCount += 1
+            if isSolution( child ):
+                return (child, values, pointers) 
         index += ( chilCount) # +1
         #index += 1
 
@@ -87,11 +91,11 @@ def lalDoesDFS( arr , d):
     #parent of -1 means root node
     pointers[ arr[0][3] ] = index
     #pointers[ arr[0][3] ] = arr[0][2]
+    if isSolution( arr ):
+        return (arr, values, pointers)
     while( True ):
         current = stack.pop()
         print(current,' <=current ; d=> ', d)
-        if isSolution( current ):
-            return (current, values, pointers)
         children = NewPermute( current )
         chilCount = 0
         for child in children:
