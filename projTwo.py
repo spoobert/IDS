@@ -20,11 +20,7 @@ def isSolution( arr ):
             return False
     return  True
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 09adb062bcb7373205401223312717c7aad96fcb
 #arr[0][0,1,2,3] 0=lbound ; 1=rbound ; 2=parent ; 3=self
 #function assumes arr[0]=(0,0,anyVal,anyVal)
 def lalDoesBFS( arr ):
@@ -32,24 +28,27 @@ def lalDoesBFS( arr ):
     pointers = {}
     values = []
     index = 0
-    arr[0][2] = '@'
+    arr[0][2] = -1
     arr[0][3] = 0 
     q.put( arr )
     values.append(arr)
-<<<<<<< HEAD
+
     #parent of -1 means root node
     pointers[ arr[0][3] ] = index
-=======
-    pointers[ arr[0][3] ] = arr[0][2]
->>>>>>> 09adb062bcb7373205401223312717c7aad96fcb
+
+    #pointers[ arr[0][3] ] = arr[0][2]
+
     while( True ):
         current = q.get()
         print( current ,'index: ', index)
         if isSolution( current ):
             return (current, values, pointers)
+
         children = NewPermute( current )
+
         chilCount = 0
         for child in children:
+
             chilCount += 1 
             #parent is set
             child[0][2] = index
@@ -65,12 +64,15 @@ def lalDoesBFS( arr ):
 
 def NewPermute(a):
     b = []
-    for N in range(1,len(a) - 1):
+    print(a)
+    for N in range(1,len(a[1]) - 1):
+        print('BBB')
         #add child iff a's left and right boundry are not current left right boundry
-        for I in range(1,len(a) - (N)):
+        for I in range(1,len(a[1]) - (N)):
             if(a[0][0] != N  or a[0][1] != N+I):
-                tmp = [N , N + I , 0 , 0]
-                tmp.append( revItoJ(a, N, N+I) )
+                tmp = [[N , N + I , 0 , 0]]
+                tmp.append( revItoJ(a[1], N, N+I) )
+                print(tmp)
                 b.append(tmp)
     return b
 
@@ -99,14 +101,14 @@ def lalDoesIDS( arr ):
 def main():
     arr = []
     arr.append( [0,0,0,0] )
-<<<<<<< HEAD
+
     arr.append( [3,1,4,7,6, 3, 9] )
     node, vals, dic = lalDoesBFS(arr)
 
     '''   
     idx = dic[node[0][2]]
     while( idx >= 0):
-=======
+
     arr.append( [ 3 , 1 , 4 , 7 , 6 , 3 , 9 ] )
     
     print( arr )
@@ -116,16 +118,17 @@ def main():
     node, vals, dic = lalDoesBFS(arr)
     idx = dic[node[0][3]]
     while( idx != '@' ):
->>>>>>> 09adb062bcb7373205401223312717c7aad96fcb
+
         print(node)
         print(idx)
         node = vals[idx]
         idx = dic[node[0][2]]
         if(idx == 753):
             break
-    '''
+
     #print( lalDoesIDS( arr ) )    
     #print( lalDoesDFS( arr, 10 ) )
+    
 
 
 
