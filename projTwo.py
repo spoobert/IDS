@@ -107,10 +107,10 @@ def main():
     while( idx >= 0 ):        
 
         node = vals[idx]
-        print(node)
         if node[0][2] == -1:
-            print(node)
+            print('root: ',node[1])
             break
+        print(node[1])        
         idx = dic[node[0][2]]
         
 
