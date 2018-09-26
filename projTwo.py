@@ -119,15 +119,16 @@ def main():
     node, vals, dic = lalDoesBFS(arr)
     idx = dic[node[0][3]]
     while( idx >= 0 ):
-
+        
         print(node)
         print(idx)
         node = vals[idx]
-        print(node)
-        print(node[0][2])
-        idx = dic[node[0][2]]
-        if(idx == 753):
+        if(node[0][2] == -1):
+            print(node)
+            print(node[0][2])
             break
+        idx = dic[node[0][2]]
+        
 
     #print( lalDoesIDS( arr ) )    
     #print( lalDoesDFS( arr, 10 ) )
