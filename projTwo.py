@@ -40,7 +40,6 @@ def lalDoesBFS( arr ):
 
     while( True ):
         current = q.get()
-        print( current ,'index: ', index)
         if isSolution( current ):
             return (current, values, pointers)
 
@@ -101,31 +100,15 @@ def lalDoesIDS( arr ):
 def main():
     arr = []
     arr.append( [0,0,0,0] )
-
     arr.append( [3,1,4,7,6, 3, 9] )
-    print(NewPermute(arr))
-    node, vals, dic = lalDoesBFS(arr)
-
-    '''   
+    node, vals, dic = lalDoesBFS(arr)    
     idx = dic[node[0][2]]
-    while( idx >= 0):
+    while( idx >= 0 ):        
 
-    arr.append( [ 3 , 1 , 4 , 7 , 6 , 3 , 9 ] )
-    
-    print( arr )
-
-    print( NewPermute( arr ) )
-    '''
-    node, vals, dic = lalDoesBFS(arr)
-    idx = dic[node[0][3]]
-    while( idx >= 0 ):
-        
-        print(node)
-        print(idx)
         node = vals[idx]
-        if(node[0][2] == -1):
+        print(node)
+        if node[0][2] == -1:
             print(node)
-            print(node[0][2])
             break
         idx = dic[node[0][2]]
         
