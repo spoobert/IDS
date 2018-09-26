@@ -36,11 +36,14 @@ def lalDoesBFS( arr ):
     #parent of -1 means root node
     pointers[ arr[0][3] ] = index
 
+    maxLen = 1
     #pointers[ arr[0][3] ] = arr[0][2]
     if isSolution( arr ):
         return (arr, values, pointers)
 
     while( True ):
+        if(maxLen < len(q)):
+            maxLen = len(q)
         current = q.get()
         if isSolution( current ):
             return (current, values, pointers)
@@ -91,9 +94,12 @@ def lalDoesDFS( arr , d):
     #parent of -1 means root node
     pointers[ arr[0][3] ] = index
     #pointers[ arr[0][3] ] = arr[0][2]
+    maxLen = 1
     if isSolution( arr ):
         return (arr, values, pointers)
     while( True ):
+        if(maxLen < len(stack)):
+            maxLen = len(stack)
         current = stack.pop()
         print(current,' <=current ; d=> ', d)
         children = NewPermute( current )
