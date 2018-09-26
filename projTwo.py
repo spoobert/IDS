@@ -64,15 +64,15 @@ def lalDoesBFS( arr ):
 
 def NewPermute(a):
     b = []
-    print(a)
-    for N in range(1,len(a[1]) - 1):
-        print('BBB')
+    #print(a)
+    for N in range(0,len(a[1]) - 1):
+        #print('BBB')
         #add child iff a's left and right boundry are not current left right boundry
-        for I in range(1,len(a[1]) - (N)):
+        for I in range(0,len(a[1]) - (N)):
             if(a[0][0] != N  or a[0][1] != N+I):
                 tmp = [[N , N + I , 0 , 0]]
                 tmp.append( revItoJ(a[1], N, N+I) )
-                print(tmp)
+                #print(tmp)
                 b.append(tmp)
     return b
 
