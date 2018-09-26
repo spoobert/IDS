@@ -118,7 +118,7 @@ def main():
     '''
     node, vals, dic = lalDoesBFS(arr)
     idx = dic[node[0][3]]
-    while( idx != '@' ):
+    while( idx >= 0 ):
 
         print(node)
         print(idx)
