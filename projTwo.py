@@ -58,8 +58,8 @@ def lalDoesBFS( arr ):
             values.append(child)
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
-            chilCount += 1
-        index += (1 + chilCount)
+            #chilCount += 1
+        index += ( chilCount) # +1
         #index += 1
 
 def NewPermute(a):
@@ -103,6 +103,7 @@ def main():
     arr.append( [0,0,0,0] )
 
     arr.append( [3,1,4,7,6, 3, 9] )
+    print(NewPermute(arr))
     node, vals, dic = lalDoesBFS(arr)
 
     '''   
@@ -122,6 +123,8 @@ def main():
         print(node)
         print(idx)
         node = vals[idx]
+        print(node)
+        print(node[0][2])
         idx = dic[node[0][2]]
         if(idx == 753):
             break
