@@ -15,10 +15,11 @@ def revItoJ( arr , i , j ):
     return tmp
 
 def isSolution( arr ):
-    for i in range( 1, len(arr) - 1 ):
-        if arr[i] > arr[i + 1]:
+    for i in range( 1, len(arr[1]) - 1 ):
+        if arr[1][i] > arr[1][i + 1]:
             return False
     return  True
+
 #arr[0][0,1,2,3] 0=lbound ; 1=rbound ; 2=parent ; 3=self
 #function assumes arr[0]=(0,0,anyVal,0)
 def lalDoesBFS( arr ):
@@ -26,14 +27,14 @@ def lalDoesBFS( arr ):
     pointers = {}
     values = []
     index = 0
-    arr[0][2] = -1
+    arr[0][2] = '@'
+    arr[0][3] = 0 
     q.put( arr )
     values.append(arr)
-    #parent of -1 means root node
-    pointers[ arr[0][2] ] = index
+    pointers[ arr[0][3] ] = arr[0][2]
     while( True ):
         current = q.get()
-        print( current )
+        print( current ,'index: ', index)
         if isSolution( current ):
             return (current, values, pointers)
         children = NewPermute( current )
@@ -49,7 +50,7 @@ def lalDoesBFS( arr ):
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
             chilCount += 1
-        index += 1 + chilCount
+        index += (1 + chilCount)
 
 def NewPermute(a):
     b = []
@@ -84,17 +85,24 @@ def lalDoesIDS( arr ):
 
 
 def main():
-    arr = [(0,0,0,0),3,1,4,7,6, 3, 9]
+    arr = []
+    arr.append( [0,0,0,0] )
+    arr.append( [ 3 , 1 , 4 , 7 , 6 , 3 , 9 ] )
+    
+    print( arr )
+
+    print( NewPermute( arr ) )
+    '''
     node, vals, dic = lalDoesBFS(arr)
-    idx = dic[node[0][2]]
-    while( idx >= 0):
+    idx = dic[node[0][3]]
+    while( idx != '@' ):
         print(node)
         print(idx)
         node = vals[idx]
         idx = dic[node[0][2]]
         if(idx == 753):
             break
-
+    '''
     #print( lalDoesIDS( arr ) )    
     #print( lalDoesDFS( arr, 10 ) )
 
