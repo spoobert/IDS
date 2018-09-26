@@ -19,8 +19,11 @@ def isSolution( arr ):
         if arr[i] > arr[i + 1]:
             return False
     return  True
+
+
+
 #arr[0][0,1,2,3] 0=lbound ; 1=rbound ; 2=parent ; 3=self
-#function assumes arr[0]=(0,0,anyVal,0)
+#function assumes arr[0]=(0,0,anyVal,anyVal)
 def lalDoesBFS( arr ):
     q = qu()
     pointers = {}
@@ -30,7 +33,7 @@ def lalDoesBFS( arr ):
     q.put( arr )
     values.append(arr)
     #parent of -1 means root node
-    pointers[ arr[0][2] ] = index
+    pointers[ arr[0][3] ] = index
     while( True ):
         current = q.get()
         print( current )
@@ -49,15 +52,17 @@ def lalDoesBFS( arr ):
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
             chilCount += 1
+        index = index + chilCount
         index += 1
 
 def NewPermute(a):
     b = []
     for N in range(1,len(a) - 1):
+        #add child iff a's left and right boundry are not current left right boundry
         for I in range(1,len(a) - (N)):
             if(a[0][0] != N  or a[0][1] != N+I):
-                tmp = revItoJ(a, N, N+I)
-                tmp[0] = (N , N+I , 0 , 0)
+                tmp = [N , N + I , 0 , 0]
+                tmp.append( revItoJ(a, N, N+I) )
                 b.append(tmp)
     return b
 
@@ -84,8 +89,12 @@ def lalDoesIDS( arr ):
 
 
 def main():
-    arr = [(0,0,0,0),3,1,4,7,6, 3, 9]
+    arr = []
+    arr.append( [0,0,0,0] )
+    arr.append( [3,1,4,7,6, 3, 9] )
     node, vals, dic = lalDoesBFS(arr)
+
+    '''   
     idx = dic[node[0][2]]
     while( idx >= 0):
         print(node)
@@ -94,7 +103,7 @@ def main():
         idx = dic[node[0][2]]
         if(idx == 753):
             break
-
+    '''
     #print( lalDoesIDS( arr ) )    
     #print( lalDoesDFS( arr, 10 ) )
 
