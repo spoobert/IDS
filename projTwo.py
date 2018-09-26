@@ -49,7 +49,7 @@ def lalDoesBFS( arr ):
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
             chilCount += 1
-        index += 1
+        index += 1 + chilCount
 
 def NewPermute(a):
     b = []
