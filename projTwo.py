@@ -62,6 +62,18 @@ def lalDoesBFS( arr ):
         #index += 1
 
 
+
+def lalDoesIDS( arr ):
+    d = 0 
+    solved = False
+    while( not solved ):
+        print(arr,' IDS loop')
+        node, vals, mapp = lalDoesDFS( arr, d )
+        if isSolution( node ):
+            print( 'Solution: ', arr )
+        d += 1
+
+
 def lalDoesDFS( arr , d):
     stack = []
     pointers = {}
@@ -76,9 +88,9 @@ def lalDoesDFS( arr , d):
     #pointers[ arr[0][3] ] = arr[0][2]
     while( True ):
         current = stack.pop()
+        print(current,' <=current ; d=> ', d)
         if isSolution( current ):
             return (current, values, pointers)
-        print(current)
         children = NewPermute( current )
         chilCount = 0
         for child in children:
@@ -93,9 +105,11 @@ def lalDoesDFS( arr , d):
             pointers[child[0][3]] = child[0][2]
             if isSolution( child ):
                 print('sol ', child)
-                return True 
-            print(child,' child')
+                return (current, values, pointers) 
+        if d == 0:
+            return (current, values, pointers)
         index += ( chilCount )
+        d -= 1 
 
 
 
@@ -115,22 +129,14 @@ def NewPermute(a):
         
 
 
-def lalDoesIDS( arr ):
-    d = 0 
-    solved = lalDoesDFS( arr, d )
-    while( not solved ):
-        d += 1
-        solved = lalDoesDFS( arr, d )
-        if solved:
-            print( 'Solution: ', arr )
-
 
 
 def main():
     arr = []
     arr.append( [0,0,0,0] )
-    arr.append( [3,2,7,1,9,4] )    
-    print( lalDoesDFS( arr , 1000 ) )
+    #[3,2,7,1,9,4]
+    arr.append([2,3,1,3]  )    
+    lalDoesIDS( arr )
     '''
     a = NewPermute( arr )[0]
     print('root',arr)
