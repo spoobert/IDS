@@ -5,6 +5,7 @@ from itertools import permutations as pu
 #[ -1, 1, 2, 3, 4, 5]
 def revItoJ( arr , i , j ):
     tmp = []
+    
     for k in range( i ):
         tmp.append( arr[k] )
     for k in reversed( range( i, j + 1 ) ):
@@ -22,26 +23,39 @@ def isSolution( arr ):
 def lalDoesBFS( arr ):
     q = qu()
     q.put( arr )
-    solved = isSolution( arr )
-    pointers = []
-    while( not solved ):
+    pointers = {}
+    values = []
+    index = 0
+    pointers[str(arr)] = -1
+    values.append(arr)
+    while( True ):
         current = q.get()
         print( current )
-        #current[0] allways >= 1 
-        rBound = len(arr) - 2
-        for i in range( current[0], len(current) - 2 ):
-            child = revItoJ( current, i, len(current) - 1 )
-            child[0] = i
-            pointers[i] = child
-            q.put( child )
-            if i < rBound:
-                child = revItoJ( current, i, rBound )
-                rBound -= 1 
-                child[0] = i 
-                pointers[i] = child
-                q.put( child )
         if isSolution( current ):
-            
+            return (current, values, pointers)
+        children = NewPermute( current )
+        for child in children:
+            q.put( child )
+            #pointers[str(child)] = index
+            child[0][2] = len(values)
+            #print(str(child))
+            values.append(child)
+            pointers[len(values)-1] = index
+        index += 1
+        
+
+
+def NewPermute(a):
+    b = []
+    for N in range(1,len(a) - 1):
+        for I in range(1,len(a) - (N)):
+            if(a[0][0] != N  or a[0][1] != N+I):
+                tmp = revItoJ(a, N, N+I)
+                tmp[0] = (N,N+I, -1)
+                b.append(tmp)
+    return b
+
+
         
 
 def lalDoesDFS( arr, d ):
@@ -64,9 +78,17 @@ def lalDoesIDS( arr ):
 
 
 def main():
-    arr = [1,3,1,4,7,9]
-    print('arr: ', arr)
-    lalDoesBFS(arr)
+    arr = [(0,0,0),3,1,4,7,6, 3, 9]
+    node, vals, dic = lalDoesBFS(arr)
+    idx = dic[node[0][2]]
+    while( idx >= 0):
+        print(node)
+        print(idx)
+        node = vals[idx]
+        idx = dic[node[0][2]]
+        if(idx == 753):
+            break
+
     #print( lalDoesIDS( arr ) )    
     #print( lalDoesDFS( arr, 10 ) )
 
