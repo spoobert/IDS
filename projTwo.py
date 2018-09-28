@@ -74,6 +74,7 @@ def lalDoesIDS( arr ):
     d = 0 
     solved = False
     while( not solved ):
+        arr = arr[0:2]
         print(arr,' IDS loop ' + str(d))
         node, vals, mapp = lalDoesDFS( arr, d )
         if isSolution( node ):
@@ -83,14 +84,18 @@ def lalDoesIDS( arr ):
 
 
 def lalDoesDFS( arr , d):
-    maxd = d
-    i = 1
+    #maxd = d
+    #i = 1
+    #n = 0
+    #bound = DataLore(len(arr))
+    #now appending a third value containing only the d
     stack = []
     pointers = {}
     values = []
     index = 0
     arr[0][2] = -1
-    arr[0][3] = 0 
+    arr[0][3] = 0
+    arr.append([d])
     stack.append( arr )
     values.append( arr )
     #parent of -1 means root node
@@ -98,52 +103,60 @@ def lalDoesDFS( arr , d):
     #pointers[ arr[0][3] ] = arr[0][2]
     maxLen = 1
     if isSolution( arr ):
-        return (arr, values, pointers)
+        return (arr[0:2], values, pointers)
     while( True ):
         if(maxLen < len(stack)):
             maxLen = len(stack)
         if(len(stack) == 0):
             print(str(current) + str(index))
-            return (current, values, pointers)
+            return (current[0:2], values, pointers)
         #print(len(stack))
         current = stack.pop()
         #print(current,' <=current ; d=> ', d)
         #print(len(stack))
-        if(False):
-            if(len(stack) == 0):
-                print(str(current) + str(index))
-                return (current, values, pointers)
-            print(stack)
-            d += 2
-        else:
-            children = NewPermute( current )
-            chilCount = 0
-            for child in children:
-                chilCount += 1 
-                #parent is set
-                child[0][2] = index
-                #self index is set
-                child[0][3] = index + chilCount
-                if(d > 0):
-                    stack.append( child )
-                #else:
-                    #d += 2
-                values.append(child)
-                #key=self index ; value=parent index
-                pointers[child[0][3]] = child[0][2]
-                if isSolution( child ):
-                    print('sol ', child)
-                    return (child, values, pointers) 
+        
+        children = NewPermute( current )
+        chilCount = 0
+        for child in children:
+            chilCount += 1 
+            #parent is set
+            child[0][2] = index
+            #self index is set
+            child[0][3] = index + chilCount
+            child.append([current[2][0]-1])
+            if(child[2][0] > 0):
+                stack.append( child )
+            #key=self index ; value=parent index
+            pointers[child[0][3]] = child[0][2]
+            if isSolution( child ):
+                print('sol ', child)
+                return (child[0:2], values, pointers) 
             #if d == 0:
                 #return (current, values, pointers)
-            index += ( chilCount )
-        if(d == 0):
-            d = maxd-i
-            i += 1
-        else:
-            d -= 1
         
+        
+        
+        
+def loreDoesDFS(a, d):
+    if(d < 0):
+        return False
+    if(isSolution(a)):
+        print(d)
+        print(a)
+        return True
+    children = NewPermute(a)
+    real = False
+    for child in children:
+        real = loreDoesDFS(child, d-1)
+        if(real):
+            return True
+    return False
 
+def DataLore(n):
+    if(n==1):
+        return 1;
+    return n * DataLore(n-1)
+        
 
 
 def NewPermute(a):
