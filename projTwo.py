@@ -53,14 +53,14 @@ def lalDoesBFS( arr ):
     maxLen = 1
     #pointers[ arr[0][3] ] = arr[0][2]
     if isSolution( arr ):
-        return (arr, values, pointers, time.clock() - t)
+        return (arr, values, pointers, time.clock() - t, maxLen)
 
     while( True ):
-        #if(maxLen < len(q)):
-        #    maxLen = len(q)
+        count = 1
         current = q.get()
+        maxLen -= 1
         if isSolution( current ):
-            return (current, values, pointers, time.clock() - t)
+            return (current, values, pointers, time.clock() - t, maxLen)
 
         children = NewPermute( current )
 
@@ -73,12 +73,15 @@ def lalDoesBFS( arr ):
             #self index is set
             child[0][3] = index + chilCount
             q.put( child )
-            values.append(child)
+            count += 1
+            if(maxLen < count):
+                maxLen = count
+            values.append(child)        
             #key=self index ; value=parent index
             pointers[child[0][3]] = child[0][2]
             #chilCount += 1
             if isSolution( child ):
-                return (child, values, pointers, time.clock() - t) 
+                return (child, values, pointers, time.clock() - t, maxLen) 
         index += ( chilCount) # +1
         #index += 1
 
@@ -89,9 +92,9 @@ def loreDoesIDS( a ):
     t = time.clock()
     while( True ):
         a = a[0:2]
-        a, v, p = lalDoesDFS( a, d )
+        a, v, p, ml = lalDoesDFS( a, d )
         if isSolution(a):
-            return(a,v,p, time.clock() - t)
+            return(a,v,p, time.clock() - t, ml)
         d += 1
 
         #check how you do indexing, the values may not be getting unique indices
@@ -110,7 +113,7 @@ def lalDoesDFS( arr , d):
     #pointers[ arr[0][3] ] = arr[0][2]
     maxLen = 1
     if isSolution( arr ):
-        return (arr[0:2], values, pointers)
+        return (arr[0:2], values, pointers, 1)
     while( True ):
         if(maxLen < len(stack)):
             maxLen = len(stack)
@@ -119,7 +122,7 @@ def lalDoesDFS( arr , d):
         if not empty:
             current = stack.pop()    
         else:
-            return(arr[0:2],values,pointers)
+            return(arr[0:2],values,pointers, maxLen)
 
         if current[2][0] == -1:
             return (arr[0:2], values, pointers)
@@ -138,7 +141,7 @@ def lalDoesDFS( arr , d):
             pointers[child[0][3]] = child[0][2]
             if isSolution( child ):
                 print('sol ', child)
-                return (child[0:2], values, pointers)
+                return (child[0:2], values, pointers, maxLen)
             #if d == 0:
                 #return (current, values, pointers)
         
@@ -151,11 +154,13 @@ def main():
     while( program ):
         
         arr = [ [0,0,0,0] ]
-        tmp = []
         tmparr = input(' enter P value for BFS: ')
-        tmp = tmparr.split(' ')
-        arr.append( tmp )
-        node, vals, dic, t = lalDoesBFS(arr)    
+        tmp = map( int, tmparr.split(' ') )
+        tmp2 = []
+        for this in tmp:
+            tmp2.append(this)
+        arr.append( tmp2 )
+        node, vals, dic, t, ml = lalDoesBFS(arr)    
         idx = dic[node[0][3]]
         count = 0
         while( True ):        
@@ -166,27 +171,17 @@ def main():
                 break
             idx = dic[nextnode[0][3]]
         print('solution printed out of order for readability: ')
-        print( node[1], ' t: ', t , '; flip count: ' , count) 
+        print( node[1], ' cpu time: ', t , '; flip count: ' , count, '; max length queue: ', ml) 
 
         arr = [ [0,0,0,0] ]
-        tmp = []
         tmparr = input(' enter P value of IDS: ')
-        tmp = tmparr.split( ' ' )
-        arr.append( tmp )
-        node, vals, dic ,t = loreDoesIDS(arr)    
-        idx = dic[node[0][3]]
-        for this in dic:
-            print(dic[this])
-        count = 0
-        while( True ):        
-            count += 1
-            nextnode = vals[idx]
-            print(nextnode[1])
-            if nextnode[0][2] == -1:
-                break
-            idx = dic[node[0][3]]
-        print('solution printed out of order for readability: ')
-        print( node[1], ' t: ', t, '; flip count: ' , count) 
+        tmp = map( int, tmparr.split( ' ' ) )
+        tmp2 = []
+        for this in tmp:
+            tmp2.append(this)
+        arr.append( tmp2 )
+        node, vals, dic ,t, ml = loreDoesIDS(arr)    
+        print( node[1], ' cpu time: ', t, ' max length stack: ', ml)
 
         cont = input(' to run again enter y or n to stop: ')
         for this in cont:
