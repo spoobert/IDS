@@ -145,19 +145,6 @@ def lalDoesDFS( arr , d):
                 
 
 
-
-#TODO values for P are always transformed to single digit
-# 123 -> 1 2 3
-#
-#that's because your're reading them in as characters, try
-# for...:
-#   tmp2 = 0
-#   while( i is not ' '):
-#       tmp2 *= 10
-#       tmp2 += int(i)
-#       i = next i
-#   tmp.append(tmp2)
-#
 def main():
     
     program = True
@@ -166,9 +153,7 @@ def main():
         arr = [ [0,0,0,0] ]
         tmp = []
         tmparr = input(' enter P value for BFS: ')
-        for i in tmparr:
-            if i is not ' ':
-                tmp.append( int(i) )
+        tmp = tmparr.split(' ')
         arr.append( tmp )
         node, vals, dic, t = lalDoesBFS(arr)    
         idx = dic[node[0][3]]
@@ -186,9 +171,7 @@ def main():
         arr = [ [0,0,0,0] ]
         tmp = []
         tmparr = input(' enter P value of IDS: ')
-        for i in tmparr:
-            if i is not ' ':
-                tmp.append( int(i) )
+        tmp = tmparr.split( ' ' )
         arr.append( tmp )
         node, vals, dic ,t = loreDoesIDS(arr)    
         idx = dic[node[0][3]]
